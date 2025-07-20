@@ -1,0 +1,57 @@
+rm -rf *.ref work transcript .*.swp *.o *.out *.so *.vstf *.log || TRUE
+# create library
+#vdel -all
+vlib work
+#compile SystemVerilog source file
+vlog +acc -work work -dpiheader dpiheader.h -f filelist.fl
+QuestaSim-64 vlog 2021.2_1 Compiler 2021.05 May 15 2021
+Start time: 07:56:48 on Jul 20,2025
+vlog "+acc" -work work -dpiheader dpiheader.h -f filelist.fl 
+-- Compiling module hdl_top
+
+Top level modules:
+	hdl_top
+End time: 07:56:48 on Jul 20,2025, Elapsed time: 0:00:00
+Errors: 0, Warnings: 0
+# compile and link C source files
+g++ -Wno-deprecated -DVCSYSTEMC=1 -fPIC -shared -Wall -g -I. -I/opt/simulation/systemc-2.3.2/include  -I/opt/simulation/questasim/questasim/include  main.cpp hvl_sc_top.cpp -o libhvl_sc_top.so -L/opt/simulation/systemc-2.3.2/lib-linux64 -lsystemc -lpthread
+# start and run simulation
+# vsim -gblso "libhvl_sc_top.so" hdl_top -scstacksize '32 Mb' -do run.do -c
+vsim -gblso "libhvl_sc_top.so" hdl_top -do run.do -c
+Reading pref.tcl
+
+# 2021.2_1
+
+# vsim -gblso libhvl_sc_top.so hdl_top -do "run.do" -c 
+# Start time: 07:56:56 on Jul 20,2025
+# Loading ./libhvl_sc_top.so
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim-64
+# //  Version 2021.2_1 linux_x86_64 May 15 2021
+# //
+# //  Copyright 1991-2021 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  QuestaSim and its associated documentation contain trade
+# //  secrets and commercial or financial information that are the property of
+# //  Mentor Graphics Corporation and are privileged, confidential,
+# //  and exempt from disclosure under the Freedom of Information Act,
+# //  5 U.S.C. Section 552. Furthermore, this information
+# //  is prohibited from disclosure under the Trade Secrets Act,
+# //  18 U.S.C. Section 1905.
+# //
+# Loading sv_std.std
+# Loading work.hdl_top(fast)
+# do run.do
+# hello systemc.
+#                   0 starting test.
+# thread1.
+# thread2.
+# thread1.
+# thread2.
+#                2010 end test.
+# ** Note: $finish    : ./hdl_top.sv(50)
+#    Time: 2010 ns  Iteration: 0  Instance: /hdl_top
+# End time: 07:56:58 on Jul 20,2025, Elapsed time: 0:00:02
+# Errors: 0, Warnings: 0
+# vsim hdl_top -ldflags "libhvl_sc_top.so" -ldflags "-Wl,-rpath,/opt/simulation/systemc-2.3.2/lib-linux64 -L/opt/simulation/systemc-2.3.2/lib-linux64 -lsystemc" -do run.do -c
