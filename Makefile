@@ -4,7 +4,7 @@
 GPP = g++
 all: clean comp sim
 
-SYSTEMC_HOME=/opt/simulation/systemc-2.3.2
+SYSTEMC_HOME=/opt/simulation/systemc-2.3.1_gcc_9.4.0
 
 CXXFLAGS=-Wno-deprecated -DVCSYSTEMC=1 -fPIC -shared -Wall -g -I. -I$(SYSTEMC_HOME)/include 
 #CXXFLAGS=-Wno-deprecated -DVCSYSTEMC=1 -fPIC -Wall -g -I. -I$(SYSTEMC_HOME)/include
@@ -23,8 +23,14 @@ comp:
 sim:
 	# start and run simulation
 	# vsim -gblso "libhvl_sc_top.so" hdl_top -scstacksize '32 Mb' -do run.do -c
-	vsim -gblso "libhvl_sc_top.so" hdl_top -do run.do -c
-	# vsim hdl_top -ldflags "libhvl_sc_top.so" -ldflags "-Wl,-rpath,/opt/simulation/systemc-2.3.2/lib-linux64 -L/opt/simulation/systemc-2.3.2/lib-linux64 -lsystemc" -do run.do -c
+	# vsim -gblso "libhvl_sc_top.so" hdl_top -do run.do -c
+	# vsim hdl_top -ldflags "libhvl_sc_top.so" -ldflags "-Wl,-rpath,/opt/simulation/systemc-2.3.1/lib-linux64 -L/opt/simulation/systemc-2.3.1/lib-linux64 -lsystemc" -do run.do -c
+	vsim -cppinstall /usr/bin hdl_top -ldflags "libhvl_sc_top.so" -ldflags "-Wl,-rpath,/opt/simulation/systemc-2.3.1_gcc_9.4.0/lib-linux64 -L/opt/simulation/systemc-2.3.1_gcc_9.4.0/lib-linux64 -lsystemc" -do run.do -c
+
+
+
+debug:
+	gdb --args vsim -gblso "libhvl_sc_top.so" hdl_top -do run.do -c
 
 
 clean:

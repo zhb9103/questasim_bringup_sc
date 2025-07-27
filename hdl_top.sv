@@ -8,14 +8,20 @@
 module hdl_top;
 
 
-import "DPI-C" function void dpi_sc_main();
+import "DPI-C" context function void dpi_sc_main(); //context
 import "DPI-C" context task hdl_time_tick();
+export "DPI-C" function top_func;
 
 
+function void top_func();
+  $display("#%d top_func.", $time);
+endfunction
 
 reg clk;
 reg rst;
 
+
+hdl_test hdl_test();
 
 initial begin
   fork

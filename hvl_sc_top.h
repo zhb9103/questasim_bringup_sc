@@ -12,10 +12,7 @@
 #include <tlm.h>
 
 
-extern "C" 
-{
-    int hdl_time_tick();
-}
+
 
 
 //SC_MODULE(hvl_sc_top)

@@ -8,29 +8,21 @@
 #include "hvl_sc_top.h"
 
 
-int hdl_time_tick()
-{
-    sc_start(1, SC_NS);
-    return 0;
-}
+
 
 
 void hvl_sc_top::thread1()
 {
-    for(int i=0;i<2;i++)
-    {
-        wait(1,SC_NS);
-        printf("thread1.\n");
-    }
+    svSetScope(svGetScopeFromName("hdl_top"));
+    top_func();
+    svSetScope(svGetScopeFromName("hdl_top.hdl_test"));
+    test_func();
+    wait(1,SC_NS);
 }
 
 void hvl_sc_top::thread2()
 {
-    for(int i=0;i<2;i++)
-    {
-        wait(1,SC_NS);
-        printf("thread2.\n");
-    }
+    wait(1,SC_NS);
 }
 
 

@@ -17,6 +17,7 @@
 extern "C"
 {
     void dpi_sc_main();
+    int hdl_time_tick();
 }
 
 
@@ -26,6 +27,12 @@ int sc_main(int argc, char* argv[]) {
 
     //instantiate user TB in this wrapper
     printf("hello systemc.\n");
+
+    svSetScope(svGetScopeFromName("hdl_top"));
+    top_func();
+    svSetScope(svGetScopeFromName("hdl_top.hdl_test"));
+    test_func();
+
     p_hvl_sc_top=new hvl_sc_top("hvl_sc_top");
     return 0;
 }
@@ -35,4 +42,8 @@ void dpi_sc_main()
     sc_elab_and_sim(0,nullptr);
 }
 
-
+int hdl_time_tick()
+{
+    sc_start(1, SC_NS);
+    return 0;
+}

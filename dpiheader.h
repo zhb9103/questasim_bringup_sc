@@ -31,4 +31,10 @@ DPI_LINK_DECL DPI_DLLESPEC
 int
 hdl_time_tick();
 
+DPI_LINK_DECL void
+test_func();
+
+DPI_LINK_DECL void
+top_func();
+
 #endif 

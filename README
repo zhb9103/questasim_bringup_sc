@@ -1,10 +1,1 @@
 A simple demo for bringup SystemC on Questasim.
-
-
-To run the demo, you need prepare the environment first.
-1 Download SystemC source code;
-2 Build SystemC by using your custom gcc or standard gcc;
-3 The Questasim environment is ready for running this demo;
-4 Change directory to the demo;
-5 using "make all", the demo will run simulating under Questasim, and get the result.
-
